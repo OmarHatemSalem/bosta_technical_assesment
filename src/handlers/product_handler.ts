@@ -7,7 +7,12 @@ const store = new ProductStore()
 
 
 const search = async (req: Request, res: Response) => {
-   const product = await store.search(req.body.name, req.body.lowerPrice, req.body.upperPrice, req.body.category)
+   const name: string = ("name" in req.body) ? req.body.name : "";
+   const lowerPrice: number = ("lowerPrice" in req.body) ? req.body.lowerPrice : -1;
+   const upperPrice: number = ("upperPrice" in req.body) ? req.body.upperPrice : -1;
+   const category: string = ("category" in req.body) ? req.body.category : "";
+
+   const product = await store.search(name, lowerPrice, upperPrice, category)
    res.json(product)
 }
 

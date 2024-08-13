@@ -46,16 +46,44 @@ var ProductStore = /** @class */ (function () {
     }
     ProductStore.prototype.search = function (name, lowerPrice, upperPrice, category) {
         return __awaiter(this, void 0, void 0, function () {
-            var sql, conn, result, err_1;
+            var sql, conds, params, i, conn, result, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        sql = "SELECT products.name, products.price, suppliers.name AS supplier\n                 FROM products JOIN suppliers ON products.supplier_id = suppliers.id \n                 WHERE products.price >= $1 \n                 AND products.price <= $2 \n                 AND products.category=$3 \n                 AND LOWER(products.name) LIKE '%' || $4 || '%'\n                 ORDER BY products.units_sold DESC;";
+                        sql = "SELECT products.name, products.price, suppliers.name AS supplier FROM products\n               JOIN suppliers\n               ON products.supplier_id = suppliers.id ";
+                        conds = [];
+                        params = [];
+                        i = 1;
+                        if (lowerPrice != -1) {
+                            conds.push("products.price >= $".concat(i));
+                            i++;
+                            params.push(lowerPrice);
+                        }
+                        if (upperPrice != -1) {
+                            conds.push("products.price <= $".concat(i));
+                            i++;
+                            params.push(upperPrice);
+                        }
+                        if (category != "") {
+                            conds.push("products.category= $".concat(i));
+                            i++;
+                            params.push(category);
+                        }
+                        if (name != "") {
+                            conds.push("LOWER(products.name) LIKE '%' || $".concat(i, " || '%'"));
+                            i++;
+                            params.push(name.toLowerCase());
+                        }
+                        if (conds.length > 0)
+                            sql += ' WHERE ';
+                        sql += conds.join(' AND ');
+                        sql += " ORDER BY products.units_sold DESC;";
+                        console.log(sql);
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
-                        return [4 /*yield*/, conn.query(sql, [lowerPrice, upperPrice, category, name.toLowerCase()])];
+                        return [4 /*yield*/, conn.query(sql, params)];
                     case 2:
                         result = _a.sent();
                         conn.release();

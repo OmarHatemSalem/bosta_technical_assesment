@@ -40,10 +40,15 @@ var product_1 = require("../models/product");
 var jwt = require('jsonwebtoken');
 var store = new product_1.ProductStore();
 var search = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var product;
+    var name, lowerPrice, upperPrice, category, product;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, store.search(req.body.name, req.body.lowerPrice, req.body.upperPrice, req.body.category)];
+            case 0:
+                name = ("name" in req.body) ? req.body.name : "";
+                lowerPrice = ("lowerPrice" in req.body) ? req.body.lowerPrice : -1;
+                upperPrice = ("upperPrice" in req.body) ? req.body.upperPrice : -1;
+                category = ("category" in req.body) ? req.body.category : "";
+                return [4 /*yield*/, store.search(name, lowerPrice, upperPrice, category)];
             case 1:
                 product = _a.sent();
                 res.json(product);
