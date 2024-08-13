@@ -51,11 +51,11 @@ var ProductStore = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 3, , 4]);
-                        sql = "SELECT * FROM products WHERE price >= $1 AND price <= $2 AND category=$3 AND name LIKE '%' || $4 || '%';";
+                        sql = "SELECT products.name, products.price, suppliers.name AS supplier\n                 FROM products JOIN suppliers ON products.supplier_id = suppliers.id \n                 WHERE products.price >= $1 \n                 AND products.price <= $2 \n                 AND products.category=$3 \n                 AND LOWER(products.name) LIKE '%' || $4 || '%'\n                 ORDER BY products.units_sold DESC;";
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();
-                        return [4 /*yield*/, conn.query(sql, [lowerPrice, upperPrice, category, name])];
+                        return [4 /*yield*/, conn.query(sql, [lowerPrice, upperPrice, category, name.toLowerCase()])];
                     case 2:
                         result = _a.sent();
                         conn.release();
