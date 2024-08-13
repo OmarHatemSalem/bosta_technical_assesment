@@ -1,0 +1,16 @@
+{
+    "dev": {
+      "driver": "pg",
+      "host": "127.0.0.1",
+      "database": "catalog",
+      "user": "postgres",
+      "password": "USpxpgihi_2002"
+    },
+    "test": {
+      "driver": "pg",
+      "host": "127.0.0.1",
+      "database": "catalog_test",
+      "user": "cataloger",
+      "password": "postgres"
+    }
+  }
