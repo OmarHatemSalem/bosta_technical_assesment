@@ -79,7 +79,6 @@ var ProductStore = /** @class */ (function () {
                             sql += ' WHERE ';
                         sql += conds.join(' AND ');
                         sql += " ORDER BY products.units_sold DESC;";
-                        console.log(sql);
                         return [4 /*yield*/, database_1["default"].connect()];
                     case 1:
                         conn = _a.sent();

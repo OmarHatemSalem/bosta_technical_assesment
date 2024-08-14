@@ -31,7 +31,6 @@ export class ProductStore {
     sql += conds.join(' AND ')
 
     sql += ` ORDER BY products.units_sold DESC;`
-    console.log(sql)
     
       // @ts-ignore
     const conn = await Client.connect()

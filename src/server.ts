@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import productRoutes from './handlers/product_handler'
+import dotenv from 'dotenv'
 
 const app: express.Application = express()
 const address: string = "0.0.0.0:3000"
@@ -24,6 +25,10 @@ app.get('/test-cors', cors(), function (req, res, next) {
 
 productRoutes(app)
 
-app.listen(3000, function () {
+dotenv.config()
+const PORT = process.env.NODE_DOCKER_PORT || 3000;
+console.log(PORT)
+
+app.listen(PORT, function () {
     console.log(`starting app on: ${address}`)
 })
