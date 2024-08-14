@@ -21,7 +21,6 @@ You must first clone the GitHub repo and then do the following steps:
     4. Connect to both databases and `GRANT ALL PRIVILEGES ON DATABASE shopping TO shopping_user;` -->
 
 1. Add the following `.env` file:
-2. Run `docker compose up` for the docker image to be built.
 
 <pre><code>
 POSTGRES_HOST=db
@@ -39,6 +38,7 @@ NODE_LOCAL_PORT=6868
 ENV=dev
 </code></pre>
 
+2. Run `docker compose up` for the docker image to be built.
 
 ## Populate the database
 
