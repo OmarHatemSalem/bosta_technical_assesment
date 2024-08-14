@@ -6,9 +6,9 @@ services:
     restart: unless-stopped
     env_file: ./.env
     environment:
-      - POSTGRES_USER=$POSTGRES_USER
-      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
-      - POSTGRES_DB=$POSTGRES_DB
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=USpxpgihi_2002
+      - POSTGRES_DB=catalog
     ports:
       - $POSTGRESDB_LOCAL_PORT:$POSTGRESDB_DOCKER_PORT
     volumes:

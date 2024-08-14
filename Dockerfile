@@ -4,4 +4,5 @@ WORKDIR /.
 COPY package.json .
 RUN npm install
 COPY . .
-CMD db-migrate up && npm run build && npm start
+EXPOSE 3000
+CMD npm run build && npm start
