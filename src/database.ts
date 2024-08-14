@@ -17,7 +17,6 @@ const {
 } = process.env
 
 let Client : Pool = new Pool();
-console.log(ENV)
 
 if(ENV === 'dev') {
   Client = new Pool({
@@ -25,6 +24,7 @@ if(ENV === 'dev') {
     database: POSTGRES_DB,
     user: POSTGRES_USER,
     password: POSTGRES_PASSWORD,
+    port: parseInt(POSTGRESDB_DOCKER_PORT || "5432")
   })
 }
 

@@ -1,7 +1,7 @@
 {
     "dev": {
       "driver": "pg",
-      "host": "127.0.0.1",
+      "host": "localhost",
       "database": "catalog",
       "user": "postgres",
       "password": "postgres"

@@ -1,34 +1,61 @@
-version: '3.8'
+# version: '3.8'
 
+# services:
+#   postgresdb:
+#     image: postgres
+#     restart: unless-stopped
+#     env_file: ./.env
+#     environment:
+#       - POSTGRES_USER=$POSTGRES_USER
+#       - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+#       - POSTGRES_DB=$POSTGRES_DB
+#     ports:
+#       - $POSTGRESDB_LOCAL_PORT:$POSTGRESDB_DOCKER_PORT
+#     volumes:
+#       - db:/var/lib/postgres
+#   app:
+#     depends_on:
+#       - postgresdb
+#     build: ./
+#     restart: unless-stopped
+#     env_file: ./.env
+#     ports:
+#       - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+#     environment:
+#       - DB_HOST=postgresdb
+#       - DB_USER=$POSTGRES_USER
+#       - DB_PASSWORD=$POSTGRES_PASSWORD
+#       - DB_NAME=$POSTGRES_DB
+#       - DB_PORT=$POSTGRESDB_DOCKER_PORT
+#     stdin_open: true
+#     tty: true
+
+# volumes: 
+#   db:
+
+version: '3.8'
 services:
-  postgresdb:
-    image: postgres
-    restart: unless-stopped
-    env_file: ./.env
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=USpxpgihi_2002
-      - POSTGRES_DB=catalog
+  api:
+    container_name: api
+    restart: always
+    build: .
     ports:
-      - $POSTGRESDB_LOCAL_PORT:$POSTGRESDB_DOCKER_PORT
-    volumes:
-      - db:/var/lib/postgres
-  app:
+      - 8080:8080
     depends_on:
-      - postgresdb
-    build: ./
-    restart: unless-stopped
-    env_file: ./.env
+      - db
+    volumes:
+    - .:/usr/src/app
+
+  db:
+    container_name: project_1_postgres
+    image: postgres
     ports:
-      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+      - '5433:${POSTGRESDB_DOCKER_PORT}'
+    volumes:
+      - data:/data/db
     environment:
-      - DB_HOST=postgresdb
-      - DB_USER=$POSTGRES_USER
-      - DB_PASSWORD=$POSTGRES_PASSWORD
-      - DB_NAME=$POSTGRES_DB
-      - DB_PORT=$POSTGRESDB_DOCKER_PORT
-    stdin_open: true
-    tty: true
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
 
 volumes: 
-  db:
+ data: {}
